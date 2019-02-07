@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!-- Modify Title between these comments (Choose correct class number and substitute your username) -->
+	<title>ITMD 565 Lab 2 - dudayakumar - Simple Calculator</title>
+	<!-- Modify Title between these comments -->
+	<style type="text/css">
+		body {
+			background-color: #ddd;
+			font-family: sans-serif;
+		}
+		#main-container {
+			width: 750px;
+			background-color: white;
+			margin:0 auto;
+			text-align: center;
+			padding: 10px;
+		}
+		#calculator-wrapper #input-wrapper {
+			margin: 40px 0 20px;
+		}
+		#calculator-wrapper #input-wrapper label {
+			font-size: 18px;
+			margin: 0 4px;
+			font-style: italic;
+		}
+		#calculator-wrapper #input-wrapper input {
+			font-size: 20px;
+			padding: 4px;
+			border: 2px solid #bbb;
+			background-color: #eee;
+		}
+		#calculator-wrapper #button-wrapper {
+			margin: 20px 0;
+		}
+		#calculator-wrapper #button-wrapper button {
+			font-size: 20px;
+			margin: 0 5px;
+		}
+		#results {
+			margin: 20px;
+			background-color: #eee;
+			border: 2px solid #bbb;
+			font-size: 24px;
+			padding: 14px;
+			overflow-x: auto;
+			min-height: 25px;
+		}
+	</style>
+</head>
+<body>
+	<div id="main-container">
+		<!-- Modify headlines between these comments (Choose correct class number and substitute Name and Email) -->
+		<h1>ITMD 565 - Lab 2 - Simple Calculator</h1>
+		<h2>Dhivya Udaya Kumar - dudayakumar@hawk.iit.edu</h2>
+		<!-- Modify headlines between these comments -->
+		<div id="calculator-wrapper">
+			<div id="input-wrapper">
+				<label>Value 1: <input type="text" name="val1" id="val1"></label>
+				<label>Value 2: <input type="text" name="val2" id="val2"></label>
+			</div>
+			<div id="button-wrapper">
+				<button id="addBtn">Add</button>
+				<button id="subBtn">Subtract</button>
+				<button id="multBtn">Multiply</button>
+				<button id="divBtn">Divide</button>
+				<button id="resetBtn">Reset</button>
+			</div>
+			<div id="results"></div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		// Begin JavaScript Code Here - Do not put JavaScript outside these comments.
+
+		//Event listeners for various operations
+		document.getElementById('addBtn').addEventListener('click',add,false);
+		document.getElementById('subBtn').addEventListener('click',subtract,false);
+		document.getElementById('multBtn').addEventListener('click',multiply,false);
+		document.getElementById('divBtn').addEventListener('click',divide,false);
+		document.getElementById('resetBtn').addEventListener('click',reset,false);
+
+		//Function to add two numbers
+		function add(){
+			var firstNum = document.getElementById('val1').value;
+			var secondNum = document.getElementById('val2').value;
+
+			if(isNaN(Number(firstNum)) || isNaN(Number(secondNum)) || firstNum.trim() == '' || secondNum.trim() == ''){
+				alert('Value 1 or Value 2 is blank or not a number.'+'\r\n'+'Resetting invalid value...');
+				if(isNaN(Number(firstNum)) || firstNum.trim() == ''){
+					document.getElementById('val1').value = '';
+				}
+				if(isNaN(Number(secondNum)) || secondNum.trim() == ''){
+					document.getElementById('val2').value = '';
+				}
+			}
+			else{
+				document.getElementById('results').innerHTML = Number(firstNum) + Number(secondNum);
+			}
+		}
+
+		//Function to subtract two numbers
+		function subtract(){
+			var firstNum = document.getElementById('val1').value;
+			var secondNum = document.getElementById('val2').value;
+
+			if(isNaN(Number(firstNum)) || isNaN(Number(secondNum)) || firstNum.trim() == '' || secondNum.trim() == ''){
+				alert('Value 1 or Value 2 is blank or not a number.'+'\r\n'+'Resetting invalid value...');
+				if(isNaN(Number(firstNum)) || firstNum.trim() == ''){
+					document.getElementById('val1').value = '';
+				}
+				if(isNaN(Number(secondNum)) || secondNum.trim() == ''){
+					document.getElementById('val2').value = '';
+				}
+			}
+			else{
+				document.getElementById('results').innerHTML = Number(firstNum) - Number(secondNum);
+			}		
+		}
+		
+		//Function to multiply two numbers
+		function multiply(){
+			var firstNum = document.getElementById('val1').value;
+			var secondNum = document.getElementById('val2').value;
+
+			if(isNaN(Number(firstNum)) || isNaN(Number(secondNum)) || firstNum.trim() == '' || secondNum.trim() == ''){
+				alert('Value 1 or Value 2 is blank or not a number.'+'\r\n'+'Resetting invalid value...');
+				if(isNaN(Number(firstNum)) || firstNum.trim() == ''){
+					document.getElementById('val1').value = '';
+				}
+				if(isNaN(Number(secondNum)) || secondNum.trim() == ''){
+					document.getElementById('val2').value = '';
+				}
+			}
+			else{
+				document.getElementById('results').innerHTML = Number(firstNum) * Number(secondNum);
+			}	
+		}
+		
+		//Function to divide two numbers
+		function divide(){
+			var firstNum = document.getElementById('val1').value;
+			var secondNum = document.getElementById('val2').value;
+
+			if(isNaN(Number(firstNum)) || isNaN(Number(secondNum)) || firstNum.trim() == '' || secondNum.trim() == ''){
+				alert('Value 1 or Value 2 is blank or not a number.'+'\r\n'+'Resetting invalid value...');
+				if(isNaN(Number(firstNum)) || firstNum.trim() == ''){
+					document.getElementById('val1').value = '';
+				}
+				if(isNaN(Number(secondNum)) || secondNum.trim() == ''){
+					document.getElementById('val2').value = '';
+				}
+			}
+			else if(Number(secondNum) === 0){
+				alert('Value 2 cannot be zero for division operation.'+'\r\n'+'Resetting Value 2...');
+				document.getElementById('val2').value = '';
+			}
+			else{
+				document.getElementById('results').innerHTML = Number(firstNum) / Number(secondNum);
+			}	
+		}
+
+		//Function to reset all the numbers
+		function reset(){
+			document.getElementById('val1').value = '';
+			document.getElementById('val2').value = '';
+			document.getElementById('results').innerHTML = '';
+		}
+
+		// End JavaScript Code Here - Do not put JavaScript outside these comments.
+	</script>
+</body>
+</html>
