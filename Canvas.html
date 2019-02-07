@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ITMD-565 Lab 5 - Canvas Drawing</title>
+	<style type="text/css">
+		#content-wrapper {
+			width: 600px;
+			margin: 0 auto;
+			text-align: center;
+		}
+		#canvasRun {
+			background-color: #c00;
+			border: 0;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div id="content-wrapper">
+		<button id="canvasRun">Draw Canvas</button><br><br>
+		<canvas id="myCanvas" width="600" height="450"></canvas>
+	</div>
+	<script type="text/javascript">
+		// Canvas Drawing Code Here
+
+		canvasRun.style.cursor = 'pointer';
+		document.getElementById('canvasRun').addEventListener('click',drawFunction,false);
+		var ctx;
+		var img;
+		var canvas;
+
+		function drawFunction(){
+			console.log('DOM Loaded....');
+
+			canvas = document.getElementById('myCanvas');
+
+			document.getElementById('canvasRun').disabled = true;
+			canvasRun.style.cursor = 'default';
+
+			if(canvas.getContext){
+				ctx = canvas.getContext('2d');
+
+				//Adding image to canvas
+				img = document.createElement('img');
+				img.setAttribute('src','IIT_SAT_stack_186_white.png');
+				img.setAttribute('alt','IIT Logo');
+
+				//Calling drawFrame function to perform animation on objects
+				window.requestAnimationFrame(drawFrame);
+			}
+		}
+
+		//variables to handle rotation animation of rectangle
+		var x = 500;
+		var y = 160;
+		var r = 0;
+		var dr = 0.5;
+
+		//variables to handle animation of arc
+		var r1 = 0;
+		var r2 = 0.7;
+		var dr1 = 0.025;
+
+		function drawFrame(){
+			//Gradient grid
+			var grd = ctx.createLinearGradient(0,0,0,canvas.height);
+			grd.addColorStop(0,'#ffffff');
+			grd.addColorStop(1,'#000000');
+			ctx.fillStyle = grd;
+			ctx.fillRect(0,0,canvas.width,canvas.height);
+			ctx.fill();
+
+			//Header
+			ctx.fillStyle = "#C80000";
+			ctx.font = "32px sans-serif";
+			ctx.fillText("ITMD 565 Canvas Lab",150,50);
+			ctx.fillRect(20, 65, 560, 4);
+
+			//Footer
+			ctx.fillStyle = "#D3D3D3";
+			ctx.font = "normal 14px sans-serif";
+			ctx.fillText("Dhivya Udaya Kumar",20,410);
+			ctx.fillText("dudayakumar@hawk.iit.edu",20,430);
+		    ctx.drawImage(img, 330, 370, 250, 60);
+
+			//Sine wave inside white rectangle
+			ctx.clearRect(250, 250, 330, 100);
+			ctx.beginPath();
+		    ctx.moveTo(275,300);
+		    ctx.quadraticCurveTo(345,250,415,300);
+		    ctx.quadraticCurveTo(485,350,555,300);
+		    ctx.lineWidth = 1.8;
+		    ctx.setLineDash([11,7]);
+		    ctx.strokeStyle = "#000000";
+		    ctx.stroke();
+
+			//Blue circle with white border
+			ctx.beginPath();
+			ctx.arc(100,150,60,0,2*Math.PI);
+			ctx.fillStyle = "white";
+			ctx.fill();
+			ctx.closePath();
+
+			ctx.beginPath();
+			ctx.arc(100,150,57,0,2*Math.PI);
+			ctx.fillStyle = "#0000C8";
+			ctx.fill();
+			ctx.closePath();
+
+			//Green triangle
+		    ctx.beginPath();
+			ctx.moveTo(100,250);
+			ctx.lineTo(40,350);
+			ctx.lineTo(160,350);
+			ctx.closePath();
+			ctx.fillStyle = "#00C800";
+			ctx.fill();
+
+			//Animated orange arc
+			ctx.beginPath();
+			ctx.arc(295,155,60,(r1*Math.PI),(r2*Math.PI));
+			ctx.lineWidth = 18;
+			ctx.setLineDash([]);
+			ctx.strokeStyle = "#FFA500";
+			ctx.stroke();
+			r1 = r1 + dr1;
+			r2 = r2 + dr1;
+			ctx.closePath();
+
+			//Animated red rectangle with white border
+			ctx.save();
+			ctx.translate(x,y);
+			ctx.rotate((Math.PI/180)*r);
+			ctx.fillStyle = "#ffffff";
+			ctx.clearRect(-62.5, -62.5, 125, 125);
+			ctx.fillStyle = "#C80000";
+			ctx.fillRect(-57.5, -57.5, 115, 115);
+			ctx.restore();
+			r = r + dr;
+
+			window.requestAnimationFrame(drawFrame);
+		}
+
+	</script>
+</body>
+</html>

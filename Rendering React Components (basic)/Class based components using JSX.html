@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lab 6 Part 3</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+    // All your code should be between these two comments
+    const product = {
+        prod_img: 'http://libertyville.rice.iit.edu/misc/care-products.jpg',
+        prod_name: 'Bath and Body Products',
+        prod_description: 'From shower gel and bar soap to moisturizing lotions and creams, the bath and body category includes all the items you need to take care of your skin and external body surfaces.'
+    };
+
+    // Put class based Product component here
+
+    class Product extends React.Component {
+        render(){
+            return (
+                <div>
+                    <img src={this.props.prodObj.prod_img} alt={"product image"}/>;
+                    <h2>{this.props.prodObj.prod_name}</h2>
+                    <p>{this.props.prodObj.prod_description}</p>
+                </div>
+            );
+        }
+    }
+
+    ReactDOM.render(<Product prodObj={product}/>, document.getElementById('app'));
+
+    // All your code should be between these two comments
+    </script>
+</body>
+</html>

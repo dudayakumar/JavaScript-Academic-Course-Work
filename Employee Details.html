@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>ITMD 565 Lab 4 - dudayakumar</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<style type="text/css">
+		#wrapper {
+			background-color: #fff;
+			max-width: 1000px;
+			margin: 0 auto;
+			padding: 20px 40px;
+		}
+		table {
+		    font-family: arial, sans-serif;
+		    border-collapse: collapse;
+		    width: 100%;
+		}
+		td, th {
+		    border: 1px solid #000000;
+		    text-align: left;
+		    padding: 8px;
+		}
+		tr:first-child {
+		    background-color: #808080;
+		    color: #DCDCDC;
+		    font-weight: bold;
+		    font-style: oblique;
+		}
+		tr:nth-child(even) {
+		    background-color: #dddddd;
+		}
+		td:nth-child(1) {
+		    width: 5%;
+		}
+		td:nth-child(2) {
+		    width: 12%;
+		}
+		td:nth-child(3) {
+		    width: 12%;
+		}
+		td:nth-child(4) {
+		    width: 23%;
+		}
+		td:nth-child(5) {
+		    width: 27%;
+		}
+		td:nth-child(6) {
+		    width: 10%;
+		}
+		td:nth-child(7) {
+		    width: 11%;
+		    text-transform: capitalize;
+		}
+		.td-true{
+    		color: #2E8B57;
+    		background: #98FB98;
+    	}
+    	.td-false{
+    		color: #B22222;
+    		background: #E9967A;
+    	}
+	</style>
+	
+</head>
+<body>
+	<div id="wrapper" align="center">
+		<h1>ITMD - 565 - Lab 4</h1>
+		<h2>Dhivya Udaya Kumar - dudayakumar@hawk.iit.edu</h2>
+
+		<button id="loadBtn">Load Data</button>
+		<button id="resetBtn">Reset</button>
+
+		<h2>Employee List</h2>
+		<div id="resultsWrapper"></div>
+	</div>
+
+	<script type="text/javascript">
+		//Setting cursor styles for the buttons and enabling/disabling the buttons
+		document.getElementById('loadBtn').disabled = false;
+		loadBtn.style.cursor = 'pointer';
+		document.getElementById('resetBtn').disabled = true;
+		resetBtn.style.cursor = 'not-allowed';
+
+		var wrapper = document.getElementById('wrapper');
+		var resultsWrapper = document.getElementById('resultsWrapper');
+		
+		//Creating table
+		var table = document.createElement('table');
+
+		var row_header = document.createElement('tr');
+
+		//Adding column titles
+		var id_header_col = document.createElement('td');
+		var id_header_text = document.createTextNode('ID');
+		id_header_col.appendChild(id_header_text);
+		row_header.appendChild(id_header_col);
+
+		var fn_header_col = document.createElement('td');
+		var fn_header_text = document.createTextNode('First Name');
+		fn_header_col.appendChild(fn_header_text);
+		row_header.appendChild(fn_header_col);
+
+		var ln_header_col = document.createElement('td');
+		var ln_header_text = document.createTextNode('Last Name');
+		ln_header_col.appendChild(ln_header_text);
+		row_header.appendChild(ln_header_col);
+
+		var title_header_col = document.createElement('td');
+		var title_header_text = document.createTextNode('Title');
+		title_header_col.appendChild(title_header_text);
+		row_header.appendChild(title_header_col);
+
+		var email_header_col = document.createElement('td');
+		var email_header_text = document.createTextNode('Email');
+		email_header_col.appendChild(email_header_text);
+		row_header.appendChild(email_header_col);
+
+		var gender_header_col = document.createElement('td');
+		var gender_header_text = document.createTextNode('Gender');
+		gender_header_col.appendChild(gender_header_text);
+		row_header.appendChild(gender_header_col);
+
+		var active_header_col = document.createElement('td');
+		var active_header_text = document.createTextNode('Active');
+		active_header_col.appendChild(active_header_text);
+		row_header.appendChild(active_header_col);
+
+		table.appendChild(row_header);
+		document.getElementById('resultsWrapper').appendChild(table);
+
+		//Handle Load Data event
+		document.getElementById('loadBtn').addEventListener('click', function(){
+
+			var myRequest = new XMLHttpRequest();
+			myRequest.onreadystatechange = function(){
+				if(myRequest.readyState === 4 && myRequest.status === 200){
+					console.log(JSON.parse(myRequest.responseText));
+					var a = JSON.parse(myRequest.responseText);
+
+					for(var i=0; i<a.length; i++){
+						var row = document.createElement('tr');
+							
+						var id_col = document.createElement('td');
+						var id_text = document.createTextNode(a[i].id);
+						id_col.appendChild(id_text);
+						row.appendChild(id_col);
+
+						var fn_col = document.createElement('td');
+						var fn_text = document.createTextNode(a[i].first_name);
+						fn_col.appendChild(fn_text);
+						row.appendChild(fn_col);
+
+						var ln_col = document.createElement('td');
+						var ln_text = document.createTextNode(a[i].last_name);
+						ln_col.appendChild(ln_text);
+						row.appendChild(ln_col);
+
+						var title_col = document.createElement('td');
+						var title_text = document.createTextNode(a[i].title);
+						title_col.appendChild(title_text);
+						row.appendChild(title_col);
+
+						var email_col = document.createElement('td');
+						var email_text = document.createTextNode(a[i].email);
+						email_col.appendChild(email_text);
+						row.appendChild(email_col);
+
+						var gender_col = document.createElement('td');
+						var gender_text = document.createTextNode(a[i].gender);
+						gender_col.appendChild(gender_text);
+						row.appendChild(gender_col);
+
+						var active_col = document.createElement('td');
+						var active_text = document.createTextNode(a[i].active);
+						
+						active_col.appendChild(active_text);
+						active_col.className = 'td-'+ a[i].active;
+						row.appendChild(active_col);
+
+						table.appendChild(row);
+					}
+					document.getElementById('resultsWrapper').appendChild(table);
+				}
+			};
+			myRequest.open('GET','http://libertyville.rice.iit.edu/scripts/4565_lab4.php', true);
+			myRequest.send();
+
+			document.getElementById('loadBtn').disabled = true;
+
+			//Setting cursor styles for the buttons and enabling/disabling the buttons
+			loadBtn.style.cursor = 'not-allowed';
+			document.getElementById('resetBtn').disabled = false;
+			resetBtn.style.cursor = 'pointer';
+		});
+
+		document.getElementById('resetBtn').addEventListener('click', function(){
+			//Setting cursor styles for the buttons and enabling/disabling the buttons
+			document.getElementById('loadBtn').disabled = false;
+			loadBtn.style.cursor = 'pointer';			
+			document.getElementById('resetBtn').disabled = true;
+			resetBtn.style.cursor = 'not-allowed';
+
+			//Removing table contents
+			while(table.firstChild){
+				table.removeChild(table.firstChild);
+			}
+
+			//Re-addition of table columns title row
+			var row_header = document.createElement('tr');
+			var id_header_col = document.createElement('td');
+			var id_header_text = document.createTextNode('ID');
+			id_header_col.appendChild(id_header_text);
+			row_header.appendChild(id_header_col);
+
+			var fn_header_col = document.createElement('td');
+			var fn_header_text = document.createTextNode('First Name');
+			fn_header_col.appendChild(fn_header_text);
+			row_header.appendChild(fn_header_col);
+
+			var ln_header_col = document.createElement('td');
+			var ln_header_text = document.createTextNode('Last Name');
+			ln_header_col.appendChild(ln_header_text);
+			row_header.appendChild(ln_header_col);
+
+			var title_header_col = document.createElement('td');
+			var title_header_text = document.createTextNode('Title');
+			title_header_col.appendChild(title_header_text);
+			row_header.appendChild(title_header_col);
+			
+			var email_header_col = document.createElement('td');
+			var email_header_text = document.createTextNode('Email');
+			email_header_col.appendChild(email_header_text);
+			row_header.appendChild(email_header_col);
+
+			var gender_header_col = document.createElement('td');
+			var gender_header_text = document.createTextNode('Gender');
+			gender_header_col.appendChild(gender_header_text);
+			row_header.appendChild(gender_header_col);
+
+			var active_header_col = document.createElement('td');
+			var active_header_text = document.createTextNode('Active');
+			active_header_col.appendChild(active_header_text);
+			row_header.appendChild(active_header_col);
+
+			table.appendChild(row_header);
+			document.getElementById('result_header').appendChild(table);
+		});
+	</script>
+</body>
+</html>

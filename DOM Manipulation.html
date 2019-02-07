@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!-- Modify Title between these comments (Choose correct class number and substitute your username) -->
+	<title>ITMD 565 Lab 3 - dudayakumar - DOM Manipulation</title>
+	<!-- Modify Title between these comments -->
+	<style type="text/css">
+		body {
+			background-color: #ccc;
+			font-family: sans-serif;
+		}
+		label {
+			width: 100px;
+			display: inline-block;
+			margin: 5px 0;
+		}
+		input {
+			display: inline-block;
+			margin: 5px 0;
+		}
+		button {
+			display: inline-block;
+			margin: 20px 10px 20px 0;
+		}
+		#wrapper {
+			background-color: #fff;
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px 40px;
+		}
+		#resultsWrapper .result {
+			border: 4px solid red;
+			padding: 10px;
+			margin: 10px 0;
+		}
+		#resultsWrapper .red {
+			border-color: red;
+		}
+		#resultsWrapper .red h2 {
+			color: red;
+		}
+		#resultsWrapper .green {
+			border-color: green;
+		}
+		#resultsWrapper .green h2 {
+			color: green;
+		}
+		#resultsWrapper .blue {
+			border-color: blue;
+		}
+		#resultsWrapper .blue h2 {
+			color: blue;
+		}
+		/* You may add additional CSS below this comment if you feel necessary */
+		.red-border{
+			margin-bottom: 6px;
+			border: 4px solid red;
+		}
+		.red-headline{
+			margin-left: 8px;
+			color: red;
+		}
+		.green-border{
+			margin-bottom: 6px;
+			border: 4px solid green;
+		}
+		.green-headline{
+			margin-left: 8px;
+			color: green;
+		}
+		.blue-border{
+			margin-bottom: 6px;
+			border: 4px solid blue;
+		}
+		.blue-headline{
+			margin-left: 8px;
+			color: blue;
+		}
+		.para{
+			margin-left: 8px;
+		}
+		.delete-button{
+			margin-left: 8px;
+		}
+		
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+		<!-- Modify headlines between these comments (Choose correct class number and substitute Name and Email) -->
+		<h1>ITMD 565 - Lab 3 - DOM Manipulation</h1>
+		<h2>Dhivya Udaya Kumar - dudayakumar@hawk.iit.edu</h2>
+		<!-- Modify headlines between these comments -->
+		<label for="bodyInput">Body Text: </label><input id="bodyInput" type="text"><br>
+		<label for="qtyInput">Quantity: </label><input id="qtyInput" type="text"><br>
+		<label for="colorInput">Color: </label>
+		<select id="colorInput">
+			<option value="red">Red</option>
+			<option value="green">Green</option>
+			<option value="blue">Blue</option>
+		</select><br>
+		
+		<button id="runBtn">Run Lab</button>
+		<button id="resetBtn">Reset Lab</button>
+		
+		<h2>Results</h2>
+		<div id="resultsWrapper"></div>
+	</div>
+	
+	<script type="text/javascript">
+		// Begin JavaScript Code Here - Do not put JavaScript outside these comments.
+
+		//Setting cursor style to pointer for Run Lab button
+		runBtn.style.cursor = 'pointer';
+		document.getElementById('resetBtn').disabled = true;
+
+		//Handle Events
+		document.getElementById('runBtn').addEventListener('click', handleRun, false);
+		document.getElementById('resetBtn').addEventListener('click', handleReset, false);
+
+		//Function to handle Run Lab
+		function handleRun(e){
+
+			var resultsWrapper = document.getElementById('resultsWrapper');
+
+			var bodyText = document.getElementById('bodyInput').value.trim();
+			var quantity = document.getElementById('qtyInput').value.trim();
+			var color = document.getElementById('colorInput').value;
+
+			//Performing RunLab action only after checking for valid inputs
+			if(bodyText !== '' && color !== '' && quantity !== '' && isNaN(Number(quantity)) === false && Number(quantity) > 0 && Number.isInteger(Number(quantity))){
+
+				//Resetting result area
+				document.getElementById('resultsWrapper').innerHTML = '';
+
+				//Enabling reset button once results are displayed
+				document.getElementById('resetBtn').disabled = false;
+				resetBtn.style.cursor = 'pointer';
+				
+				//Iterating as many times as the number of results to be displayed
+				for (var i = 1; i <= Number(quantity); i++) {
+					console.log('entered for loop');
+					console.log('color = '+color);
+
+					//Creating div element
+					var controls = document.createElement('div');
+					controls.id = 'controls';
+					controls.className = color+'-border';
+
+					//creating h2 element to display "Item"
+					var headline = document.createElement('h2');
+					headline.appendChild(document.createTextNode('Item '+i));
+					headline.className = color+'-headline';
+
+					//Creating paragraph element to display body text
+					var bodyLine = document.createElement('p');
+					bodyLine.appendChild(document.createTextNode(bodyText));
+					bodyLine.className = 'para';
+
+					//Creating delete button for each individual result
+					var deleteBtn = document.createElement('button');
+					deleteBtn.id = 'deleteBtn';
+					deleteBtn.appendChild(document.createTextNode('Delete'));
+					deleteBtn.style.cursor = 'pointer';
+					deleteBtn.className = 'delete-button';
+					deleteBtn.addEventListener('click', function(){
+						console.log('clicked delete button');
+
+						//Deleting the individual result
+						this.parentNode.parentNode.removeChild(this.parentNode);
+
+						//Disabling reset button and setting cursor to default style after all result nodes are manually deleted and result warapper becomes empty
+						var isEmpty = document.getElementById('resultsWrapper').innerHTML === '';
+						console.log('isEmpty = '+isEmpty);
+						if(isEmpty){
+							document.getElementById('resetBtn').disabled = true;
+							resetBtn.style.cursor = 'default';
+						}
+					});
+
+					//Displaying results
+					controls.appendChild(headline);
+					controls.appendChild(bodyLine);
+					controls.appendChild(deleteBtn);
+					document.getElementById('resultsWrapper').appendChild(controls);
+
+					//Clearing the text boxes after results are displayed
+					document.getElementById('bodyInput').value = '';
+					document.getElementById('qtyInput').value = '';
+					document.getElementById('colorInput').options[0].selected = true;
+				}
+			}
+
+			//Handling all possible invalid scenarios
+			else{
+				console.log('quantity = '+Number(quantity));
+
+				//Both Body text and Quantity are blank
+				if(bodyText === '' && quantity === ''){
+					alert('Body Text & Quantity are missing! '+'\r\n'+'Please enter a Body Text and Quantity.');
+				}
+				//Quantity is not a number and Body Text is blank
+				else if(isNaN(Number(quantity)) === true && bodyText === ''){
+					alert('Body Text is missing and Quantity cannot contain alphabets/blank spaces/symbols.'+'\r\n'+'Please enter a Body Text to be displayed and a positive integer for Quantity.');
+				}
+				//Quantity is zero/negative/fraction and Body Text is blank
+				else if((Number(quantity) <= 0 || (!(Number.isInteger(Number(quantity))))) && bodyText === ''){
+					alert('Body text is missing and Quantity cannot be zero/negative/fraction.'+'\r\n'+'Please enter a Body Text to be displayed and a positive integer for Quantity.');
+				}
+				//Only Body Text is blank and Quantity has a valid value
+				else if(bodyText === '' && quantity !== ''){
+					alert('Body Text is missing! '+'\r\n'+'Please enter a text to be displayed.');
+				}
+				//Only Quantity is blank and Body Text is populated
+				else if(quantity === '' && bodyText !== ''){
+					alert('Quantity is missing! '+'\r\n'+'Please enter a positive integer.');
+				}
+				//Quantity is not a number and Body Text is populated
+				else if(isNaN(Number(quantity)) === true && bodyText !== ''){
+					alert('Quantity cannot contain alphabets/blank spaces/symbols. '+'\r\n'+'Please enter a positive integer.');
+				}
+				//Quantity is zero/negative/fraction and Body text is populated
+				else if((Number(quantity) <= 0 || (!(Number.isInteger(Number(quantity))))) && bodyText !== ''){
+					alert('Quantity cannot be zero/negative/fraction. '+'\r\n'+'Please enter a positive integer.')
+				}
+			}
+		}
+
+		//Function to reset Body Text, Quantity, Color
+		function handleReset(e){
+
+			//Resetting input area
+			document.getElementById('bodyInput').value = '';
+			document.getElementById('qtyInput').value = '';
+			document.getElementById('colorInput').options[0].selected = true;
+
+			//Resetting result area
+			document.getElementById('resultsWrapper').innerHTML = '';
+
+			//Disabling and setting cursor to default style on reset button after all contents are reset
+			document.getElementById('resetBtn').disabled = true;
+			resetBtn.style.cursor = 'default';
+		}
+
+		// End JavaScript Code Here - Do not put JavaScript outside these comments.
+	</script>
+</body>
+</html>

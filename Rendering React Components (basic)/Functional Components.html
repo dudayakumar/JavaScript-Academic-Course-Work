@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lab 6 Part 2</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+    // All your code should be between these two comments
+    const prod_img = 'http://libertyville.rice.iit.edu/misc/care-products.jpg';
+    const prod_name = 'Bath and Body Products';
+    const prod_description = 'From shower gel and bar soap to moisturizing lotions and creams, the bath and body category includes all the items you need to take care of your skin and external body surfaces.';
+
+    const ProductImage = (props) => {
+        return <img src={props.mypimg} alt={"prod_img"}/>;
+    };
+
+    const ProductName = (props) => {
+        return <h2>{props.mypname}</h2>
+    };
+
+    const ProductDesc = (props) => {
+        return <p>{props.mypdesc}</p>
+    };
+
+    const Product = (props) => {
+        return (
+            <div>
+                <ProductImage mypimg={prod_img}/>
+                <ProductName mypname={prod_name}/>
+                <ProductDesc mypdesc={prod_description}/>
+            </div>    
+        );
+    };
+
+    ReactDOM.render(<Product />, document.getElementById('app'));
+
+    // All your code should be between these two comments
+    </script>
+</body>
+</html>
